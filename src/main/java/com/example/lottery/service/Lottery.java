@@ -5,11 +5,10 @@ import com.example.lottery.data.WinnerRepository;
 import com.example.lottery.exception.TooFewMembersException;
 import com.example.lottery.model.Participant;
 import com.example.lottery.model.Winner;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class Lottery {
@@ -25,22 +24,22 @@ public class Lottery {
 
 
     public Winner start() {
-        int participantNumber = Math.toIntExact(participantRepo.count());
+        List<Participant> participants = new ArrayList<>();
+        participantRepo.findAll().forEach(participants::add);
+        int participantNumber = participants.size();
         int MIN_NUMBER_PARTICIPANT = 2;
-        int MIN_WINNING_AMOUNT = 0;
         int MAX_WINNING_AMOUNT = 1000;
         if (participantNumber < MIN_NUMBER_PARTICIPANT) {
             throw new TooFewMembersException();
         }
 
-        System.out.println(participantRepo.findFirstByOrderByIdAsc().getId());
-        int winningAmount = random.getRandom(MIN_WINNING_AMOUNT,MAX_WINNING_AMOUNT);
-        long winnerId = random.getRandom(Math.toIntExact(participantRepo.findFirstByOrderByIdAsc().getId()),participantNumber+Math.toIntExact(participantRepo.findFirstByOrderByIdAsc().getId()));
+        int winningAmount = random.getRandom(MAX_WINNING_AMOUNT);
+        int winnerId = random.getRandom(participantNumber);
 
         Winner winner = new Winner();
-        winner.setAge(participantRepo.findById(winnerId).get().getAge());
-        winner.setName(participantRepo.findById(winnerId).get().getName());
-        winner.setCity(participantRepo.findById(winnerId).get().getCity());
+        winner.setAge(participants.get(winnerId).getAge());
+        winner.setName(participants.get(winnerId).getName());
+        winner.setCity(participants.get(winnerId).getCity());
         winner.setAmount(winningAmount);
 
         participantRepo.deleteAll();
