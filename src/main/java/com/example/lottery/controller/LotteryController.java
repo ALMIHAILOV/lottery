@@ -15,7 +15,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/lottery")
 public class LotteryController {
-
     private final ParticipantRepository participantRepo;
     private final WinnerRepository winnerRepo;
     private final Lottery lottery;

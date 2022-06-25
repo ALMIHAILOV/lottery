@@ -36,9 +36,6 @@ public class Lottery {
         int winningAmount = random.getRandom(1, MAX_WINNING_AMOUNT);
         int winnerId = random.getRandom(0, participantNumber-1);
 
-        System.out.println(participantNumber);
-        System.out.println(winnerId);
-
         Winner winner = new Winner();
         winner.setAge(participants.get(winnerId).getAge());
         winner.setName(participants.get(winnerId).getName());
