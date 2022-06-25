@@ -11,9 +11,8 @@ public class Random {
         this.rest = rest;
     }
 
-    public Integer getRandom(int maxVal) {
-        String url = "https://www.random.org/integers/?num=1&min=1&max="+ maxVal +"&col=1&base=10&format=plain&rnd=new";
-        String r = rest.getForObject(url, String.class);
+    public Integer getRandom(int minVal, int maxVal) {
+        String r = rest.getForObject("https://www.random.org/integers/?num=1&min={minVal}&max={maxVal}&col=1&base=10&format=plain&rnd=new", String.class, minVal, maxVal);
         return Integer.parseInt(r.trim());
     }
 }

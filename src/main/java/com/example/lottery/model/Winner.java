@@ -1,6 +1,8 @@
 package com.example.lottery.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,8 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Winner {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
